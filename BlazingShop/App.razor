@@ -1,8 +1,12 @@
 ﻿<Router AppAssembly="@typeof(App).Assembly">
+    @* Se rota foi encontrada *@
     <Found Context="routeData">
+        @* Dados da Rota *@
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        @* Após a navegação ele busca o h1 e deixar o cursor nesse elemento (h1) *@
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
+    @* Se rota não foi encontrada *@
     <NotFound>
         <PageTitle>Not found</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
