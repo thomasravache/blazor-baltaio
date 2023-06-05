@@ -18,6 +18,7 @@
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
 
+    @* Div que mostra os erros *@
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
             An error has occurred. This application may no longer respond until reloaded.
@@ -29,6 +30,7 @@
         <a class="dismiss">🗙</a>
     </div>
 
+    @* Ligação do client com o servidor *@
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>
