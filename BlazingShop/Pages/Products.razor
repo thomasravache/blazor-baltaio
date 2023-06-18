@@ -1,8 +1,24 @@
 @page "/products"
+@* Ou mover o using pro _Imports *@
+@using BlazingShop.Models
 
 <PageTitle>Products</PageTitle>
 
 <h1>Products</h1>
+
+@if (_loading)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <ul>
+        @foreach(var item in _products)
+        {
+            <li>@item.Name</li>
+        }
+    </ul>
+}
 
 @* Usa o mesmo motor de Razor *@
 @*
@@ -14,7 +30,26 @@
     Em uma Razor page o código ficaria em uma outra classe
 *@
 
-@code
-{
-    
+@code {
+    private List<Product> _products = new();
+    private bool _loading = false;
+
+    protected override async Task OnInitializedAsync() {
+        _loading = true;
+        await Task.Delay(500);
+
+        for (int index = 0; index < 25; index++)
+        {
+            _products.Add(new Product
+            {
+                Id = index + 1,
+                Name = $"Produto {index + 1}",
+                Description = $"Produto legal {index + 1}",
+                Image = $"imagem-prod-{index + 1}",
+                Price = index * 13.75M,
+                CategoryId = 1
+            });
+        }
+        _loading = false;
+    }
 }
