@@ -7,8 +7,11 @@
 }
 else
 {
+    <span>Skip: @Skip</span> <br>
+    <span>Take: @Take</span> <br>
+
     <ul>
-        @foreach(var item in _products)
+        @foreach(var item in _products.Skip(@Skip).Take(@Take))
         {
             <li>@item.Name</li>
         }
@@ -26,6 +29,12 @@ else
 *@
 
 @code {
+    @* Parameter seria similar as props nos componentes *@
+    [Parameter]
+    public int Skip { get; set; } = 0;
+    [Parameter]
+    public int Take { get; set; } = 25;
+
     private List<Product> _products = new();
     private bool _loading = false;
 

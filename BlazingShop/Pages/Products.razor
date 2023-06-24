@@ -1,4 +1,4 @@
-@page "/products"
+@page "/products/{skip:int?}/{take:int?}"
 @* Ou mover o using pro _Imports *@
 @using BlazingShop.Models
 @using BlazingShop.Shared.Components
@@ -7,7 +7,7 @@
 
 <h1>Products</h1>
 
-<ProductListComponent></ProductListComponent>
+<ProductListComponent Skip="@Skip" Take="@Take"></ProductListComponent>
 
 @* Usa o mesmo motor de Razor *@
 @*
@@ -20,5 +20,8 @@
 *@
 
 @code {
-
+    [Parameter]
+    public int Skip { get; set; } = 0;
+    [Parameter]
+    public int Take { get; set; } = 25;
 }
