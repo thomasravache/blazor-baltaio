@@ -12,6 +12,13 @@ para gerenciar formulario *@
  *@
 <EditForm Model="_model" OnValidSubmit="@HandleSubmitAsync">
 
+    @* 
+        Todas as validaçoes informadas no model serão feitas
+        para mostrar esses erros utilizar essas tags abaixo
+     *@
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
     <div class="mb-3">
         <label for="Title" class="form-label">Title</label>
         @* Fazendo o binding da propriedade Title do modelo passado (Product) *@
@@ -32,6 +39,10 @@ para gerenciar formulario *@
             }
         </InputSelect>
     </div>
+
+    <button class="btn btn-success" type="submit">
+        SAVE
+    </button>
 
 </EditForm>
 
