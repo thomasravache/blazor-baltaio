@@ -16,11 +16,27 @@ para gerenciar formulario *@
         @* Fazendo o binding da propriedade Title do modelo passado (Product) *@
         <InputText class="form-control" type="text" id="title" @bind-Value="_model.Title" />
     </div>
+    <div class="mb-3">
+        <label for="Price" class="form-label">Price</label>
+        @* Fazendo o binding da propriedade Price do modelo passado (Product) *@
+        <InputNumber class="form-control" type="number" id="Price" @bind-Value="_model.Price" />
+    </div>
+
+    <div class="mb-3">
+        <label for="CategoryId" class="form-label">Categories</label>
+        <InputSelect id="CategoryId" @bind-Value="_model.CategoryId" class="form-control">
+            @foreach (var category in _categories)
+            {
+                <option value="@category.Id">@category.Title</option>
+            }
+        </InputSelect>
+    </div>
 
 </EditForm>
 
 @code {
     private Product _model = new();
+    private List<Category> _categories = new();
 
     async Task HandleSubmitAsync()
     {
