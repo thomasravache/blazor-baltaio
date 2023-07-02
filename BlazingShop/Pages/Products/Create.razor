@@ -9,10 +9,21 @@ para gerenciar formulario *@
 @* Model="" do EditForm vincula ao modelo que foi especificado no @code
     tudo que for editado no seu _model será refletido no EditForm e vice-versa (two-way-binding)
  *@
-<EditForm Model="_model">
+<EditForm Model="_model" OnValidSubmit="@HandleSubmitAsync">
+
+    <div class="mb-3">
+        <label for="Title" class="form-label">Title</label>
+        @* Fazendo o binding da propriedade Title do modelo passado (Product) *@
+        <InputText class="form-control" type="text" id="title" @bind-Value="_model.Title" />
+    </div>
 
 </EditForm>
 
 @code {
     private Product _model = new();
+
+    async Task HandleSubmitAsync()
+    {
+
+    }
 }
