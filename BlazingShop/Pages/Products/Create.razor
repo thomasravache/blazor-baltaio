@@ -40,15 +40,22 @@ para gerenciar formulario *@
         </InputSelect>
     </div>
 
+    @if(!string.IsNullOrEmpty(_errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @_errorMessage
+        </div>
+    }
+
     <button class="btn btn-success" type="submit">
         SAVE
     </button>
-
 </EditForm>
 
 @code {
     private Product _model = new();
     private List<Category> _categories = new();
+    private string? _errorMessage = null;
 
     protected override async Task OnInitializedAsync() {
         _categories = await _context
@@ -58,7 +65,7 @@ para gerenciar formulario *@
     }
     async Task HandleSubmitAsync()
     {
-
+        _errorMessage = "Falha ao persistir os dados";
     }
 
 }
