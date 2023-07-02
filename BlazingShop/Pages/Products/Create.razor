@@ -62,10 +62,22 @@ para gerenciar formulario *@
             .Categories
             .AsNoTracking()
             .ToListAsync();
+        
+        _model.CategoryId = _categories[0].Id;
     }
     async Task HandleSubmitAsync()
     {
-        _errorMessage = "Falha ao persistir os dados";
+        try
+        {
+            await _context.Products.AddAsync(_model);
+            await _context.SaveChangesAsync();
+
+            _model = new Product();
+        }
+        catch
+        {
+            _errorMessage = "Falha ao persistir os dados";
+        }
     }
 
 }
