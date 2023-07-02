@@ -24,7 +24,7 @@
             <tr>
                 <td>@product.Id</td>
                 <td>@product.Title</td>
-                <td>@product.Price.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"))</td>
+                <td>@product.Price.ToString("C", new CultureInfo("pt-BR"))</td>
                 <td></td>
             </tr>
         }
