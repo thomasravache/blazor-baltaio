@@ -1,5 +1,6 @@
 ﻿@page "/products/create"
-@using Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext _context
 
 <h1>New Product</h1>
 
@@ -38,8 +39,15 @@ para gerenciar formulario *@
     private Product _model = new();
     private List<Category> _categories = new();
 
+    protected override async Task OnInitializedAsync() {
+        _categories = await _context
+            .Categories
+            .AsNoTracking()
+            .ToListAsync();
+    }
     async Task HandleSubmitAsync()
     {
 
     }
+
 }
