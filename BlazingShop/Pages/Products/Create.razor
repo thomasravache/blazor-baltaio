@@ -1,6 +1,7 @@
 ﻿@page "/products/create"
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext _context
+@inject NavigationManager _navigationManager
 
 <h1>New Product</h1>
 
@@ -72,7 +73,9 @@ para gerenciar formulario *@
             await _context.Products.AddAsync(_model);
             await _context.SaveChangesAsync();
 
-            _model = new Product();
+            @* Navegar para outras rotas *@
+            _navigationManager.NavigateTo("/products");
+            @* _model = new Product(); *@
         }
         catch
         {
