@@ -25,7 +25,10 @@
                 <td>@product.Id</td>
                 <td>@product.Title</td>
                 <td>@product.Price.ToString("C", new CultureInfo("pt-BR"))</td>
-                <td></td>
+                <td>
+                    <a href="products/edit/@product.Id">EDIT</a>
+                    <a href="products/delete/@product.Id">DELETE</a>
+                </td>
             </tr>
         }
     </tbody>

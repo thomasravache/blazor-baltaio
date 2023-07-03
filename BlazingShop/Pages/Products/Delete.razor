@@ -1,9 +1,9 @@
-﻿@page "/products/edit/{id:int}"
+﻿@page "/products/delete/{id:int}"
 @using Microsoft.EntityFrameworkCore
 @inject AppDbContext _context
 @inject NavigationManager _navigationManager
 
-<h1>@_model?.Title</h1>
+<h1>Delete @_model?.Title?</h1>
 
 <EditForm Model="_model" OnValidSubmit="@HandleSubmitAsync">
 
@@ -17,22 +17,12 @@
     <div class="mb-3">
         <label for="Title" class="form-label">Title</label>
         @* Fazendo o binding da propriedade Title do modelo passado (Product) *@
-        <InputText class="form-control" type="text" id="Title" @bind-Value="_model.Title" />
+        <InputText readonly class="form-control" type="text" id="title" @bind-Value="_model.Title" />
     </div>
     <div class="mb-3">
         <label for="Price" class="form-label">Price</label>
         @* Fazendo o binding da propriedade Price do modelo passado (Product) *@
-        <InputNumber class="form-control" type="number" id="Price" @bind-Value="_model.Price" />
-    </div>
-
-    <div class="mb-3">
-        <label for="CategoryId" class="form-label">Categories</label>
-        <InputSelect id="CategoryId" @bind-Value="_model.CategoryId" class="form-control">
-            @foreach (var category in _categories)
-            {
-                <option value="@category.Id">@category.Title</option>
-            }
-        </InputSelect>
+        <InputNumber readonly class="form-control" type="number" id="Price" @bind-Value="_model.Price" />
     </div>
 
     @if(!string.IsNullOrEmpty(_errorMessage))
@@ -42,8 +32,8 @@
         </div>
     }
 
-    <button class="btn btn-success" type="submit">
-        SAVE
+    <button class="btn btn-danger" type="submit">
+        DELETE
     </button>
 </EditForm>
 
@@ -51,26 +41,16 @@
     [Parameter]
     public int Id { get; set; }
 
-    private Product _model = new();
-    private List<Category> _categories = new();
+    private Product? _model = new();
     private string? _errorMessage = null;
 
     protected override async Task OnInitializedAsync()
     {
-        _categories = await _context
-            .Categories
-            .AsNoTracking()
-            .ToListAsync();
 
-        var prod = await _context
+        _model = await _context
             .Products
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == Id);
-
-        if (prod == null)
-            _errorMessage = "Não encontrado";
-        else
-            _model = prod;
     }
 
     async Task HandleSubmitAsync()
@@ -79,21 +59,17 @@
         {
             var prod = await _context.Products.FirstOrDefaultAsync(x => x.Id == Id);
 
-            if (prod is null)
+            if (prod == null)
                 throw new Exception("Produto não encontrado");
 
-            prod.Title = _model.Title;
-            prod.Price = _model.Price;
-            prod.CategoryId = _model.CategoryId;
-
-            _context.Products.Update(prod);
+            _context.Products.Remove(prod);
             await _context.SaveChangesAsync();
 
             _navigationManager.NavigateTo("/products");
         }
         catch
         {
-            _errorMessage = "Falha ao alterar produto";
+            _errorMessage = "Falha ao excluir produto";
         }
     }
 }
